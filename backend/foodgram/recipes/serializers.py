@@ -1,23 +1,12 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers, status
-from rest_framework.serializers import (
-    IntegerField,
-    ModelSerializer,
-    ReadOnlyField,
-    SerializerMethodField
-    )
+from rest_framework.serializers import (IntegerField, ModelSerializer,
+                                        ReadOnlyField, SerializerMethodField)
 
 from users.serializers import CustomUserSerializer
 from .fields import Base64ImageField, Hex2NameColor
-from .models import (
-    Favorite,
-    Ingredient,
-    Recipe,
-    RecipeIngredient,
-    RecipeTag,
-    ShoppingList,
-    Tag
-    )
+from .models import (Favorite, Ingredient, Recipe, RecipeIngredient,
+                     RecipeTag, ShoppingList, Tag)
 
 
 class TagSerializer(ModelSerializer):
@@ -32,7 +21,7 @@ class TagSerializer(ModelSerializer):
             'name',
             'color',
             'slug'
-            ]
+        ]
 
 
 class RecipeIngredientSerializer(ModelSerializer):
@@ -51,7 +40,7 @@ class RecipeIngredientSerializer(ModelSerializer):
             'name',
             'amount',
             'measurement_unit'
-            ]
+        ]
 
 
 class IngredientSerializer(ModelSerializer):
@@ -63,7 +52,7 @@ class IngredientSerializer(ModelSerializer):
             'id',
             'name',
             'measurement_unit'
-            ]
+        ]
 
 
 class RecipeSerializer(ModelSerializer):
@@ -90,7 +79,7 @@ class RecipeSerializer(ModelSerializer):
             'image',
             'text',
             'cooking_time'
-            ]
+        ]
 
     def get_is_favorited(self, obj):
         request = self.context.get('request')
@@ -120,7 +109,7 @@ class AddIngredientRecipeSerializer(ModelSerializer):
         fields = [
             'id',
             'amount'
-            ]
+        ]
 
 
 class CreateRecipeSerializer(ModelSerializer):
@@ -144,7 +133,7 @@ class CreateRecipeSerializer(ModelSerializer):
             'name',
             'text',
             'cooking_time'
-            ]
+        ]
 
     def validate_ingredients(self, data):
         ingredient_int = []
@@ -212,7 +201,7 @@ class FavoriteSerializer(RecipeSerializer):
             'id',
             'name',
             'cooking_time',
-            )
+        )
 
     def validate(self, data):
         recipe = self.instance
@@ -236,7 +225,7 @@ class ShoppingListSerializer(RecipeSerializer):
             'id',
             'name',
             'cooking_time',
-            )
+        )
 
     def validate(self, data):
         recipe = self.instance
