@@ -9,11 +9,11 @@ class Ingredient(models.Model):
     name = models.CharField(
         verbose_name='Нааименование ингредиента',
         max_length=100,
-        )
+    )
     measurement_unit = models.CharField(
         verbose_name='Единица измерения',
         max_length=10,
-        )
+    )
 
     class Meta:
         ordering = ['name']
@@ -33,16 +33,16 @@ class Tag(models.Model):
     name = models.CharField(
         verbose_name='Наименование тега',
         max_length=20
-        )
+    )
     color = models.CharField(
         verbose_name='Код цвета',
         max_length=8
-        )
+    )
     slug = models.SlugField(
         verbose_name='Slug',
         unique=True,
         max_length=100,
-        )
+    )
 
     class Meta:
         ordering = ['name']
@@ -65,15 +65,15 @@ class Recipe(models.Model):
     name = models.CharField(
         verbose_name='Наименование рецепта',
         max_length=100
-        )
+    )
     image = models.ImageField(
         verbose_name='Изображение',
         upload_to='recipes/images/'
-        )
+    )
     text = models.TextField(
         verbose_name='Описание',
         max_length=500
-        )
+    )
     ingredients = models.ManyToManyField(
         Ingredient,
         verbose_name='Ингредиенты',
@@ -88,11 +88,11 @@ class Recipe(models.Model):
     )
     cooking_time = models.PositiveSmallIntegerField(
         verbose_name='Время приготовления'
-        )
+    )
     created = models.DateTimeField(
         verbose_name='Дата и время создания',
         auto_now_add=True,
-        )
+    )
 
     class Meta:
         verbose_name = 'Рецепт'
@@ -120,7 +120,7 @@ class RecipeIngredient(models.Model):
     )
     amount = models.PositiveSmallIntegerField(
         verbose_name='Количество ингредиентов'
-        )
+    )
 
     class Meta:
         constraints = [

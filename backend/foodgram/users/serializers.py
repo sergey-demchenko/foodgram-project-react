@@ -21,7 +21,7 @@ class CustomUserSerializer(UserSerializer):
             'last_name',
             'password',
             'is_subscribed'
-            ]
+        ]
 
     def get_is_subscribed(self, obj):
         user = self.context.get('request').user
@@ -43,7 +43,7 @@ class CustomUserCreateSerializer(UserCreateSerializer):
             'first_name',
             'last_name',
             'password'
-            ]
+        ]
 
 
 class CropRecipeSerializer(serializers.ModelSerializer):
@@ -56,7 +56,7 @@ class CropRecipeSerializer(serializers.ModelSerializer):
             'name',
             'image',
             'cooking_time'
-            ]
+        ]
         read_only_fields = ['__all__', ]
 
 
@@ -77,13 +77,13 @@ class SubscribeSerializer(UserSerializer):
             'is_subscribed',
             'recipes',
             'recipes_count'
-            ]
+        ]
         read_only_fields = [
             'email',
             'username',
             'first_name',
             'last_name'
-            ]
+        ]
 
     def get_is_subscribed(self, obj):
         user = self.context.get('request').user

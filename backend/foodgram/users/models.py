@@ -9,16 +9,16 @@ class User(AbstractUser):
     first_name = models.CharField(
         verbose_name='Имя',
         max_length=30,
-        )
+    )
     last_name = models.CharField(
         verbose_name='Фамилия',
         max_length=30
-        )
+    )
     email = models.EmailField(
         verbose_name='Электронная почта',
         max_length=100,
         unique=True
-        )
+    )
     username = models.CharField(
         verbose_name='Имя пользователя',
         max_length=30,
@@ -32,7 +32,7 @@ class User(AbstractUser):
         'username',
         'first_name',
         'last_name'
-        ]
+    ]
 
     def __str__(self):
         return self.username
@@ -46,13 +46,13 @@ class Subscription(models.Model):
         verbose_name='Подписчик',
         related_name='subscriber',
         on_delete=models.CASCADE,
-        )
+    )
     author = models.ForeignKey(
         User,
         verbose_name='Автор',
         related_name='author',
         on_delete=models.CASCADE,
-        )
+    )
 
     class Meta:
         constraints = [

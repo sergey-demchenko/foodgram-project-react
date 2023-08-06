@@ -23,5 +23,5 @@ class Hex2NameColor(serializers.Field):
         except ValueError:
             raise serializers.ValidationError(
                 'Отсутствует имя для данного цвета'
-                )
+            )
         return data

@@ -11,14 +11,9 @@ from .filters import IngredientFilter, RecipeFilter
 from .mixins import add_del_recipe
 from .models import Favorite, Ingredient, Recipe, ShoppingList, Tag
 from .pagination import SimplePagination
-from .serializers import (
-    CreateRecipeSerializer,
-    FavoriteSerializer,
-    IngredientSerializer,
-    RecipeSerializer,
-    ShoppingListSerializer,
-    TagSerializer
-    )
+from .serializers import (CreateRecipeSerializer, FavoriteSerializer,
+                          IngredientSerializer, RecipeSerializer,
+                          ShoppingListSerializer, TagSerializer)
 from .utils import download_shopping_list
 
 
