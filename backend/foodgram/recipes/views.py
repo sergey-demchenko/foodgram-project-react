@@ -1,6 +1,4 @@
-from django.db.models import Sum
 from django.http import HttpResponse
-from .models import RecipeIngredient
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
@@ -17,6 +15,7 @@ from .pagination import SimplePagination
 from .serializers import (CreateRecipeSerializer, FavoriteSerializer,
                           IngredientSerializer, RecipeSerializer,
                           ShoppingListSerializer, TagSerializer)
+from .utils import download_shopping_list
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
@@ -55,33 +54,16 @@ class RecipeViewSet(viewsets.ModelViewSet):
     @action(detail=False, permission_classes=[IsAuthenticated])
     def download_shopping_cart(self, request):
         """ Скачать список покупок. """
-        try:
-            shopping_items = "Cписок покупок:"
-            ingredients = RecipeIngredient.objects.filter(
-                recipe__shopping__user=request.user
-            ).values(
-                'ingredient__name', 'ingredient__measurement_unit'
-            ).annotate(counter=Sum('amount'))
-
-            for num, ingr in enumerate(ingredients):
-                shopping_items += (
-                    f"\n{ingr['ingredient__name']} - "
-                    f"{ingr['counter']} {ingr['ingredient__measurement_unit']}"
-                )
-                if num < ingredients.count() - 1:
-                    shopping_items += ', '
-
-            file = 'shopping_list'
-            response = HttpResponse(
-                shopping_items,
-                'Content-Type: application/pdf'
-            )
-            response[
-                'Content-Disposition'
-            ] = f'attachment; filename="{file}.pdf"'
-            return response
-        except ValueError:
+        user = self.request.user
+        if not user.carts.exists():
             return Response(status=status.HTTP_400_BAD_REQUEST)
+        file = f'{user.username}_shopping_list.txt'
+        shopping_items = download_shopping_list(user)
+        response = HttpResponse(
+            shopping_items, content_type='text.txt; charset=utf-8'
+        )
+        response["Content-Disposition"] = f'attachment; filename={file}'
+        return response
 
 
 class IngredientViewSet(viewsets.ReadOnlyModelViewSet):

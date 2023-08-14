@@ -36,6 +36,7 @@ class IngredientAdmin(admin.ModelAdmin):
         'measurement_unit'
     ]
     search_fields = ['name']
+    list_filter = ['name']
     empty_value_display = '-пусто-'
 
 
@@ -52,7 +53,11 @@ class RecipeAdmin(admin.ModelAdmin):
         'author__username',
         'tags'
     ]
-    list_filter = ['tags']
+    list_filter = [
+        'name',
+        'author__username',
+        'tags'
+    ]
     empty_value_display = '-пусто-'
     inlines = (
         IngredientsInLine,
